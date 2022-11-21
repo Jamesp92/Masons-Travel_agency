@@ -9,8 +9,9 @@
 class Seed
 
   def self.begin
-    seed = Seed.new
-    seed.generate_destinations 
+    seed = Seed.new  
+    seed.generate_destinations
+    seed.generate_reviews
   end
 
   def generate_destinations 
@@ -26,9 +27,21 @@ class Seed
 
   puts "Fake desitnations created" 
 
-
-
-
+  def generate_reviews
+    10.times do |i|
+      review = Review.create!(
+        content_body: Faker::Lorem.sentence(word_count: 10, supplemental: false, random_words_to_add: 4),
+        rating: Faker::Number.between(from: 1, to: 5),
+        destination_id: Destination.all.first.id,
+        user_id: User.all.first.id
+      )
+    end
+  end
 end
 
+Review.destroy_all
+Destination.destroy_all
+User.destroy_all
+User.create!(user_name:"UserUser", password:"1234" , password_confirmation:"1234")
+User.create!(user_name:"AdminAdmin", password:"1234" , password_confirmation:"1234", admin: "true")
 Seed.begin

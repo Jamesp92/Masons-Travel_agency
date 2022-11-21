@@ -10,14 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_10_035437) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_16_030510) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_keys", force: :cascade do |t|
+    t.integer "bearer_id", null: false
+    t.string "bearer_type", null: false
+    t.string "token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bearer_id", "bearer_type"], name: "index_api_keys_on_bearer_id_and_bearer_type"
+    t.index ["token"], name: "index_api_keys_on_token", unique: true
+  end
 
   create_table "destinations", force: :cascade do |t|
     t.string "city"
     t.string "country"
-    t.integer "overall_rating"
+    t.decimal "overall_rating", precision: 3, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -26,18 +36,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_10_035437) do
     t.string "content_body"
     t.integer "user_id"
     t.integer "destination_id"
-    t.integer "rating"
+    t.decimal "rating", precision: 3, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string "user_name"
-    t.boolean "admin"
-    t.string "password_hash"
-    t.string "password_salt"
+    t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest", null: false
+    t.index ["user_name"], name: "index_users_on_user_name", unique: true
   end
 
   add_foreign_key "reviews", "destinations"

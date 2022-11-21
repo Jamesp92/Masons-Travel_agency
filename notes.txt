@@ -4,32 +4,14 @@ As a user, I want to see the most popular travel destinations by number of revie
 As a user, I want to PUT and DELETE reviews, but only if I wrote them. (Start by requiring a user_name param to match the user_name of the author on the message. You can always try authentication later.)
 As a user, I want to look up random destinations just for fun.
 
-tables: destinations(id), reviews(destination_id), 
 
+TO DO:
 
-
-Tables:
-
-Title
-Colum Column Column Columm
-
-
-Users 
-ID | C | C | C |
-
-Ratings 
-ID | Review ID | C | C |
-
-Reviews 
-ID | Destination ID | C | C |
-
-Destinations 
-ID | C | C | C |
-
-
-
-class RenameOldTableToNewTable < ActiveRecord::Migration
-  def change
-    rename_table :old_table_name, :new_table_name
-  end 
-end
+1. Do validations on the limits for inputs such as (requres stuff, limit rating to 0.0 -> 5.0)
+2. Collect rating from each NEW review created and add together to make average for OVERALL_RATING in desintation table.a
+3. REVIEWS...pretty much all of that.
+  - LEARN how to GET and POST via nested url
+4. authentication for users (limit what they can and can't do..also figure out how you sign in?)
+5. scopes for number of review, overall Ratings
+6. RANDOM destination thing
+7. Search functions for country or city
